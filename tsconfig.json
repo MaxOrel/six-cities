@@ -22,10 +22,13 @@
     "forceConsistentCasingInFileNames": true,
     "paths": {
       "@pages/*": ["./src/pages/*"],
-      "@types": ["./src/types"],
-      "@constants": ["./src/utils/constants.ts"],
+      "@customType/*": ["./src/types/*"],
+      "@shared/*": ["./src/shared/*"],
+      "@mocks/*": ["./src/mocks/*"],
+      "@utils/*": ["./src/utils/*"],
+      "@constants": ["./src/shared/constants.ts"],
       "@components/*": ["./src/components/*"],
-    }
+    },
   },
   "include": ["src", "vite.config.ts"],
   "references": [{ "path": "./tsconfig.node.json" }]

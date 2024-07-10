@@ -1,7 +1,7 @@
-import Header from '../../components/header/header';
-import OfferCard from '../../components/offer-card/offer-card';
-import { OfferPreview } from '../../types/offer';
-import { FavoritesEmptyPage } from '../favorites-empty-page/favorites-empty-page';
+import Header from '@components/header';
+import OfferCard from '@components/offer-card';
+import { OfferPreview } from '@customType/offer';
+import FavoritesEmptyPage from '@pages/favorites-empty-page';
 
 type FavoritePageProps = {
   offers: OfferPreview[];

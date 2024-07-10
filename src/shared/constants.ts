@@ -1,4 +1,4 @@
-import { TSizeMap } from '../types/size';
+import { TSizeMap } from '@customType/size';
 
 export enum CitiesName {
   Paris = 'Paris',
@@ -9,6 +9,13 @@ export enum CitiesName {
   Dusseldorf = 'Dusseldorf',
 }
 
+export enum AppRoute{
+  Root = '/',
+  Login = '/login',
+  Favorites = '/favorites',
+  Offer = '/offer',
+  NotFound = '*'
+}
 export const CityMap = {
   Paris: { name: CitiesName.Paris, location: { latitude: 48.8566, longitude: 2.3522, zoom: 10} },
   Cologne: { name: CitiesName.Cologne, location: { latitude: 50.935173, longitude: 6.953101, zoom: 10 }},

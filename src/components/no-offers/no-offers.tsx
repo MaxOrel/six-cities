@@ -1,4 +1,4 @@
-import { CitiesName } from '../../shared/constants';
+import { CitiesName } from '@constants';
 
 type NoOffersProps = {
   currentLocation: keyof typeof CitiesName;

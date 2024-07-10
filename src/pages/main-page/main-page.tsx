@@ -1,8 +1,8 @@
-import Header from '../../components/header/header';
-import NoOffers from '../../components/no-offers/no-offers';
-import OfferCard from '../../components/offer-card/offer-card';
-import { CityMap } from '../../shared/constants';
-import { OfferPreview } from '../../types/offer';
+import Header from '@components/header';
+import NoOffers from '@components/no-offers';
+import OfferCard from '@components/offer-card';
+import { CityMap } from '@constants';
+import { OfferPreview } from '@customType/offer';
 
 type MainPageProps = {
   offers: OfferPreview[];

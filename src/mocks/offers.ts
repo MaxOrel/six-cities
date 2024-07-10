@@ -1,4 +1,4 @@
-import { Offer, OfferPreview } from '../types/offer';
+import { Offer, OfferPreview } from '@customType/offer';
 
 export const OFFERS: OfferPreview[] = [
   {

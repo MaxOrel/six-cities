@@ -1,6 +1,8 @@
+import { AppRoute } from '@constants';
+import { OfferPreview } from '@customType/offer';
+import { getRatingWidth } from '@utils/offer';
 import clsx from 'clsx';
-import { OfferPreview } from '../../types/offer';
-import { getRatingWidth } from '../../utils/offer';
+import { Link } from 'react-router-dom';
 type Size = 'small' | 'medium' | 'large';
 type CardType = 'favorites' | 'cities';
 type OfferCardProps = {
@@ -35,14 +37,14 @@ function OfferCard({
           'place-card__image-wrapper'
         )}
       >
-        <a href="#">
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>
           <img
             className="place-card__image"
             src={`${offer.previewImage}`}
             {...getImageSize(size)}
             alt={offer.title}
           />
-        </a>
+        </Link>
       </div>
       <div className="place-card__info">
         <div className="place-card__price-wrapper">
@@ -66,7 +68,7 @@ function OfferCard({
           </div>
         </div>
         <h2 className="place-card__name">
-          <a href="#">{offer.title}</a>
+        <Link to={`${AppRoute.Offer}/${offer.id}`}>{offer.title}</Link>
         </h2>
         <p className="place-card__type">{offer.type}</p>
       </div>
