@@ -1,10 +1,16 @@
 import { AppRoute } from '@constants';
+import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 
-export default function Logo(): JSX.Element {
+type LogoProps = {
+  isDisabledLogo? : boolean;
+}
+
+export default function Logo({isDisabledLogo}:LogoProps): JSX.Element {
+  const Tag = isDisabledLogo ?'div' : Link ;
   return (
-    <Link className="header__logo-link header__logo-link--active"  to={AppRoute.Root}>
+    <Tag className={clsx('header__logo-link', isDisabledLogo && 'header__logo-link--active')} to={AppRoute.Root}>
       <img className="header__logo" src="img/logo.svg" alt="6 cities logo" width="81" height="41"/>
-    </Link>
+    </Tag>
   );
 }

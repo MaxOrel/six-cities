@@ -1,4 +1,3 @@
-import Header from '@components/header';
 import OfferCard from '@components/offer-card';
 import { OfferPreview } from '@customType/offer';
 import FavoritesEmptyPage from '@pages/favorites-empty-page';
@@ -6,28 +5,14 @@ import FavoritesEmptyPage from '@pages/favorites-empty-page';
 type FavoritePageProps = {
   offers: OfferPreview[];
 };
-function getFavoritesByLocation(items: OfferPreview[]) {
-  return items.reduce<{ [key: string]: OfferPreview[]; }>((acc, current) => {
-    const location = current.city.name;
-    if (!(location in acc)) {
-      acc[location] = [];
-    }
-    acc[location].push(current);
-
-    return acc;
-  }, {});
-}
 
 function FavoritePage({ offers }: FavoritePageProps): JSX.Element {
   const favorites = offers.filter((item) => item.isFavorite);
-  const favoritesByLocation = getFavoritesByLocation(favorites);
+  const favoritesByLocation = Object.groupBy(favorites, (offer) => offer.city.name);
+
   const hasFavorites = Boolean(favorites?.length);
 
   return (
-    <div className="page">
-      <Header />
-
-      <main className="page__main page__main--favorites">
         <div className="page__favorites-container container">
           {hasFavorites ? (
             <section className="favorites">
@@ -63,14 +48,6 @@ function FavoritePage({ offers }: FavoritePageProps): JSX.Element {
             : <FavoritesEmptyPage />
           }
         </div>
-      </main>
-      <footer className="footer container">
-        <a className="footer__logo-link" href="main.html">
-          <img className="footer__logo" src="img/logo.svg" alt="6 cities logo" width="64" height="33" />
-        </a>
-      </footer>
-    </div>
-
   );
 
 }

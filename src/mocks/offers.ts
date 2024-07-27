@@ -2763,12 +2763,8 @@ export const OFFERS: OfferPreview[] = [
   },
 ];
 
-export const OFFER_DETAIL: Offer = {
-  id: "f641a4cd-06b9-4a1d-8957-3e19fcad7948",
-  title: "Nice, cozy, warm big bed apartment",
+export const OFFER_DETAIL: Pick<Offer, 'bedrooms' | 'description' | 'goods' | 'host' | 'images' | 'maxAdults'> = {
   description: "Design interior in most sympathetic area! Complitely renovated, well-equipped, cosy studio in idyllic, over 100 years old wooden house. Calm street, fast connection to center and airport.",
-  type: "house",
-  price: 709,
   images: [
     "https://16.design.htmlacademy.pro/static/hotel/16.jpg",
     "https://16.design.htmlacademy.pro/static/hotel/13.jpg",
@@ -2777,19 +2773,6 @@ export const OFFER_DETAIL: Offer = {
     "https://16.design.htmlacademy.pro/static/hotel/6.jpg",
     "https://16.design.htmlacademy.pro/static/hotel/8.jpg"
   ],
-  city: {
-    name: "Paris",
-    location: {
-      latitude: 48.85661,
-      longitude: 2.351499,
-      zoom: 13
-    }
-  },
-  location: {
-    latitude: 48.868610000000004,
-    longitude: 2.342499,
-    zoom: 16
-  },
   goods: [
     "Towels",
     "Cable TV",
@@ -2804,9 +2787,6 @@ export const OFFER_DETAIL: Offer = {
     name: "Angelina",
     avatarUrl: "https://16.design.htmlacademy.pro/static/host/avatar-angelina.jpg"
   },
-  isPremium: true,
-  isFavorite: false,
-  rating: 2.4,
   bedrooms: 5,
   maxAdults: 7
 };

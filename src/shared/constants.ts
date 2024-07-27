@@ -14,6 +14,7 @@ export enum AppRoute{
   Login = '/login',
   Favorites = '/favorites',
   Offer = '/offer',
+  OfferId = '/offer/:offerId',
   NotFound = '*'
 }
 export const CityMap = {
@@ -43,3 +44,12 @@ export enum AuthorizationStatus {
   Auth = 'AUTH',
   NoAuth = 'NO_AUTH',
 }
+
+
+export const RATING = [
+  { stars: 5, title: 'perfect' },
+  { stars: 4, title: 'good' },
+  { stars: 3, title: 'not bad' },
+  { stars: 2, title: 'badly' },
+  { stars: 1, title: 'terribly' },
+];

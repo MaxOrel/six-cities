@@ -4,11 +4,12 @@ import { getRatingWidth } from '@utils/offer';
 import clsx from 'clsx';
 import { Link } from 'react-router-dom';
 type Size = 'small' | 'medium' | 'large';
-type CardType = 'favorites' | 'cities';
+type CardType = 'favorites' | 'cities' | 'near-places';
 type OfferCardProps = {
   offer: OfferPreview;
   size: Size;
   variant?: CardType;
+  onCardHover?: (offer: OfferPreview | null) => void
 };
 function getImageSize(size: Size) {
   if (size === 'small') {
@@ -23,9 +24,23 @@ function OfferCard({
   offer,
   variant,
   size,
+  onCardHover
 }: OfferCardProps): JSX.Element {
+
+  const handleListItemHover = () => {
+    onCardHover && onCardHover(offer)
+  }
+
+  const handleListItemBlur = () => {
+    onCardHover && onCardHover(null)
+  }
+
   return (
-    <article className={clsx(variant && `${variant}__card`, 'place-card')}>
+    <article
+    className={clsx(variant && `${variant}__card`, 'place-card')}
+    onMouseOver={handleListItemHover}
+    onMouseLeave={handleListItemBlur}
+    >
       {
         offer.isPremium
           ? <div className="place-card__mark"><span>Premium</span></div>
