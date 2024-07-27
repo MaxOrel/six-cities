@@ -3,7 +3,8 @@ import leaflet from 'leaflet';
 import 'leaflet/dist/leaflet.css';
 import { useEffect, useRef } from 'react';
 
-import { City } from '../../types/city';
+import { CITIES } from '../../shared/constants';
+import { CitiesName } from '../../types/city';
 import { OfferPreview } from '../../types/offer';
 import PinActive from './assets/pin-active.svg';
 import Pin from './assets/pin.svg';
@@ -11,7 +12,7 @@ import useMap from './helpers/hooks';
 
 type TMapProps = {
   extraClassName?: string;
-  city: City;
+  cityName: CitiesName;
   points: OfferPreview[];
   selectedPoint: OfferPreview | null;
 };
@@ -28,7 +29,8 @@ const currentCustomIcon = leaflet.icon({
   iconAnchor: [13.5, 39],
 });
 
-function Map({ extraClassName, city, points, selectedPoint }: TMapProps) {
+function Map({ extraClassName, cityName, points, selectedPoint }: TMapProps) {
+  const city = CITIES.find((city) => city.name === cityName) || CITIES[0];
   const mapRef = useRef<HTMLDivElement | null>(null);
   const map = useMap({ city, mapRef });
 

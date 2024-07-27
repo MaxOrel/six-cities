@@ -1,13 +1,16 @@
 import { TSizeMap } from '@customType/size';
+import { CitiesName } from '../types/city';
 
-export enum CitiesName {
-  Paris = 'Paris',
-  Cologne = 'Cologne',
-  Brussels = 'Brussels',
-  Amsterdam = 'Amsterdam',
-  Hamburg = 'Hamburg',
-  Dusseldorf = 'Dusseldorf',
-}
+
+export const LOCATIONS = [
+  'Paris',
+  'Cologne',
+  'Brussels',
+  'Amsterdam',
+  'Hamburg',
+  'Dusseldorf',
+];
+
 
 export enum AppRoute{
   Root = '/',
@@ -17,15 +20,39 @@ export enum AppRoute{
   OfferId = '/offer/:offerId',
   NotFound = '*'
 }
-export const CityMap = {
-  Paris: { name: CitiesName.Paris, location: { latitude: 48.8566, longitude: 2.3522, zoom: 10} },
-  Cologne: { name: CitiesName.Cologne, location: { latitude: 50.935173, longitude: 6.953101, zoom: 10 }},
-  Brussels: { name: CitiesName.Brussels, location: { latitude: 50.8476, longitude: 4.3572, zoom: 10 } },
-  Amsterdam: { name: CitiesName.Amsterdam, location: { latitude: 52.3676, longitude: 4.9041, zoom: 10 } },
-  Hamburg: { name: CitiesName.Hamburg, location: { latitude: 53.5488, longitude: 9.9872, zoom: 10 } },
-  Dusseldorf: { name: CitiesName.Dusseldorf, location: { latitude: 51.2277, longitude: 6.7735, zoom: 10 } },
-} as const;
 
+export const CITIES = [
+  {
+    id: 'paris',
+    location: { latitude: 48.85661, longitude: 2.351499, zoom: 13 },
+    name: CitiesName.Paris
+  },
+  {
+    id: 'cologne',
+    location: { latitude: 50.938361, longitude: 6.959974, zoom: 13 },
+    name: CitiesName.Cologne,
+  },
+  {
+    id: 'brussels',
+    location: { latitude: 50.846557, longitude: 4.351697, zoom: 13 },
+    name: CitiesName.Brussels
+  },
+  {
+    id: 'amsterdam',
+    location: { latitude: 52.37454, longitude: 4.897976, zoom: 13 },
+    name: CitiesName.Amsterdam
+  },
+  {
+    id: 'hamburg',
+    location: { latitude: 53.550341, longitude: 10.000654, zoom: 13 },
+    name: CitiesName.Hamburg
+  },
+  {
+    id: 'dusseldorf',
+    location: { latitude: 51.225402, longitude: 6.776314, zoom: 13 },
+    name: CitiesName.Dusseldorf
+  },
+] as const;
 
 export const DEFAULT_CITY = CitiesName.Paris;
 

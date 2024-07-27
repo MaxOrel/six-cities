@@ -1,6 +1,6 @@
 import Layout from '@components/layout';
 import ProtectRoute from '@components/protect-route/protect-route';
-import { AppRoute, CityMap } from '@constants';
+import { AppRoute } from '@constants';
 import { OFFERS } from '@mocks/offers';
 import FavoritePage from '@pages/favorites-page/favorites-page';
 import LoginPage from '@pages/login-page/login-page';
@@ -15,7 +15,7 @@ function App(): JSX.Element {
       <Route path={AppRoute.Root} element={<Layout />}>
         <Route
           path={AppRoute.Root}
-          element={<MainPage offers={OFFERS} locations={CityMap} />}
+          element={<MainPage offers={OFFERS}/>}
         />
         <Route
           path={AppRoute.Favorites}
