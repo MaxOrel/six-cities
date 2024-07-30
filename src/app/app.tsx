@@ -15,7 +15,7 @@ function App(): JSX.Element {
       <Route path={AppRoute.Root} element={<Layout />}>
         <Route
           path={AppRoute.Root}
-          element={<MainPage offers={OFFERS}/>}
+          element={<MainPage/>}
         />
         <Route
           path={AppRoute.Favorites}

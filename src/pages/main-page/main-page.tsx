@@ -1,16 +1,13 @@
-import { CITIES } from '@constants';
-import { OfferPreview } from '@customType/offer';
-import { useState } from 'react';
 import Locations from '../../components/locations/locations';
 import PlacesListSection from '../../components/places-list-section';
+import { useAppSelector } from '../../store/hooks/useAppSelector';
+import { offerSelectors } from '../../store/slices/offers';
 
-type MainPageProps = {
-  offers: OfferPreview[];
-};
+function MainPage(): JSX.Element {
+  const currentCity = useAppSelector(offerSelectors.city)
+  const offers = useAppSelector(offerSelectors.offers)
 
-function MainPage({ offers }: MainPageProps): JSX.Element {
-  const [selectedPoint, setSelectedPoint] = useState<OfferPreview | null>(null);
-  const currentCity = CITIES[0].name;
+  // const currentCity = CITIES[0].name;
   const currentOffers = offers.filter(offer => offer.city.name === currentCity) || []
   return (
     <>
