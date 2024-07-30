@@ -1,11 +1,11 @@
+import { CitiesName } from '@customType/city';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { CITIES } from '@shared/constants';
+import { OFFERS_SLICE_NAME } from '@slices/slice-name';
 import { OFFERS } from '../../../mocks/offers';
-import { CITIES } from '../../../shared/constants';
-import { CitiesName } from '../../../types/city';
 import { OffersState } from './types';
 
 
-const OFFERS_SLICE_NAME = 'offers';
 const initialState:OffersState = {
   currentCity: CITIES[0].name,
   offers: OFFERS
