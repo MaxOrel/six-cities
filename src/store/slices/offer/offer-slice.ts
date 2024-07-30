@@ -1,10 +1,10 @@
-import { Offer } from '@customType/offer';
+import { Offer, OfferPreview } from '@customType/offer';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
 import { OFFER_SLICE_NAME } from '@slices/slice-name';
 
 type OfferState = {
   info: Offer | null;
-  nearby: Offer[];
+  nearby: OfferPreview[];
 };
 
 const initialState: OfferState = {

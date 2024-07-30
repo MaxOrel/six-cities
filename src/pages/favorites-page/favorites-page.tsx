@@ -1,13 +1,11 @@
 import OfferCard from '@components/offer-card';
-import { OfferPreview } from '@customType/offer';
 import FavoritesEmptyPage from '@pages/favorites-empty-page';
+import { useAppSelector } from '../../store/hooks/useAppSelector';
+import { favoritesSelectors } from '../../store/slices/favorites';
 
-type FavoritePageProps = {
-  offers: OfferPreview[];
-};
 
-function FavoritePage({ offers }: FavoritePageProps): JSX.Element {
-  const favorites = offers.filter((item) => item.isFavorite);
+function FavoritePage(): JSX.Element {
+  const favorites = useAppSelector(favoritesSelectors.favorites)
   const favoritesByLocation = Object.groupBy(favorites, (offer) => offer.city.name);
 
   const hasFavorites = Boolean(favorites?.length);

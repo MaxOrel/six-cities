@@ -10,7 +10,9 @@ import PremiumBadge from '../../components/premium-badge';
 import Rating from '../../components/rating';
 import Reviews from '../../components/reviews';
 import { OFFER_DETAIL } from '../../mocks/offers';
-import { REVIEWS } from '../../mocks/reviews';
+import { useAppSelector } from '../../store/hooks/useAppSelector';
+import { offersSelectors } from '../../store/slices/offers';
+import { reviewsSelectors } from '../../store/slices/reviews';
 import { Offer, OfferPreview } from '../../types/offer';
 
 type OfferPageProps = {
@@ -21,9 +23,8 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
   const { offerId } = useParams();
   const offer = offers.find((offer) => offer.id === offerId);
   const offerDetail = { ...offer, ...OFFER_DETAIL } as Offer;
-  const reviews = REVIEWS.filter((review) => review.offerId === offer?.id);
-
-  const currentCity = offers[0].city;
+  const reviews = useAppSelector(reviewsSelectors.reviews);
+  const  currentCity = useAppSelector(offersSelectors.city);
   const otherPlaces = offers.slice(0, 3);
 
   return (
@@ -75,7 +76,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
         </div>
         <Map
           extraClassName="offer__map"
-          city={currentCity}
+          cityName={currentCity}
           points={otherPlaces}
           selectedPoint={null}
         />

@@ -1,12 +1,20 @@
+import { useEffect } from 'react';
 import Locations from '../../components/locations/locations';
 import PlacesListSection from '../../components/places-list-section';
+import { useAppDispatch } from '../../store/hooks/useAppDispatch';
 import { useAppSelector } from '../../store/hooks/useAppSelector';
-import { offerSelectors } from '../../store/slices/offers';
+import { offersSelectors } from '../../store/slices/offers';
+import { fetchOffersAction } from '../../store/slices/offers/offer-thunk';
 
 function MainPage(): JSX.Element {
-  const currentCity = useAppSelector(offerSelectors.city)
-  const offers = useAppSelector(offerSelectors.offers)
+  const currentCity = useAppSelector(offersSelectors.city)
+  const offers = useAppSelector(offersSelectors.offers)
 
+  const dispatch =useAppDispatch();
+
+  useEffect(() => {
+    dispatch(fetchOffersAction())
+  },[])
   // const currentCity = CITIES[0].name;
   const currentOffers = offers.filter(offer => offer.city.name === currentCity) || []
   return (
