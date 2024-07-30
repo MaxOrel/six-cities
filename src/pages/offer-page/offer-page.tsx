@@ -1,4 +1,5 @@
 import { useParams } from 'react-router-dom';
+import { FavoriteButton } from '../../components/favorite-button/favorite-button';
 import Gallery from '../../components/gallery';
 import Map from '../../components/map';
 import OfferCard from '../../components/offer-card';
@@ -39,12 +40,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
             />
             <div className="offer__name-wrapper">
               <h1 className="offer__name">{offerDetail.title}</h1>
-              <button className="offer__bookmark-button button" type="button">
-                <svg className="offer__bookmark-icon" width="31" height="33">
-                  <use xlinkHref="#icon-bookmark"></use>
-                </svg>
-                <span className="visually-hidden">To bookmarks</span>
-              </button>
+              <FavoriteButton offerId={offerDetail.id} bemBlock='offer' isFavorite={offerDetail.isFavorite} size='large'  />
             </div>
             <Rating rating={offerDetail.rating} />
             <ul className="offer__features">
