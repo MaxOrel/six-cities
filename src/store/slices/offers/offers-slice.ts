@@ -1,14 +1,16 @@
 import { CitiesName } from '@customType/city';
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
+import { RequestStatus } from '@shared/api';
 import { CITIES } from '@shared/constants';
 import { OFFERS_SLICE_NAME } from '@slices/slice-name';
+import { isActionPending, isActionRejected } from '@utils/redux';
 import { fetchOffersAction } from './offer-thunk';
 import { OffersState } from './types';
 
 const initialState: OffersState = {
   currentCity: CITIES[0].name,
   offers: [],
-  requestStatus: 'idle'
+  requestStatus: RequestStatus.Idle,
 };
 
 export const offersSlice = createSlice({
@@ -21,24 +23,16 @@ export const offersSlice = createSlice({
   },
   extraReducers: (builder) => {
     builder
-      .addCase(
-        fetchOffersAction.pending,
-        (state) => {
-          state.requestStatus = 'loading';
-        }
-      )
-      .addCase(
-        fetchOffersAction.fulfilled,
-        (state, action) => {
-          state.offers = action.payload;
-          state.requestStatus = 'success';
-        }
-      ) .addCase(
-        fetchOffersAction.rejected,
-        (state) => {
-          state.requestStatus = 'failed';
-        }
-      );
+      .addCase(fetchOffersAction.fulfilled, (state, action) => {
+        state.offers = action.payload;
+        state.requestStatus = RequestStatus.Success;
+      })
+      .addMatcher(isActionPending(OFFERS_SLICE_NAME), (state) => {
+        state.requestStatus = RequestStatus.Loading;
+      })
+      .addMatcher(isActionRejected(OFFERS_SLICE_NAME), (state) => {
+        state.requestStatus = RequestStatus.Failed;
+      });
   },
   selectors: {
     offers: (state: OffersState) => state.offers,

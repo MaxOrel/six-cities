@@ -8,7 +8,7 @@ import { CitiesName } from '../../types/city';
 import { OfferPreview } from '../../types/offer';
 import PinActive from './assets/pin-active.svg';
 import Pin from './assets/pin.svg';
-import useMap from './helpers/hooks';
+import useMap from './helpers/useMap';
 
 type TMapProps = {
   extraClassName?: string;
@@ -36,22 +36,28 @@ function Map({ extraClassName, cityName, points, selectedPoint }: TMapProps) {
 
   useEffect(() => {
     if (map) {
+      const markerLayer = leaflet.layerGroup().addTo(map);
+
       points.forEach((point) => {
-        leaflet
-          .marker(
-            {
-              lat: point.location.latitude,
-              lng: point.location.longitude,
-            },
-            {
-              icon:
-                point.id === selectedPoint?.id
-                  ? currentCustomIcon
-                  : defaultCustomIcon,
-            }
-          )
-          .addTo(map);
+        const marker = leaflet.marker(
+          {
+            lat: point.location.latitude,
+            lng: point.location.longitude,
+          },
+          {
+            icon:
+              point.id === selectedPoint?.id
+                ? currentCustomIcon
+                : defaultCustomIcon,
+          }
+        );
+
+        marker.addTo(markerLayer);
       });
+
+      return () => {
+        map.removeLayer(markerLayer);
+      };
     }
   }, [map, points, selectedPoint]);
 

@@ -6,6 +6,12 @@ type DetailMessageType = {
   message: string,
 }
 
+export const enum RequestStatus {
+	Idle = 'idle',
+	Loading = 'loading',
+	Success = 'success',
+	Failed = 'failed',
+}
 
 export const createAPI = (): AxiosInstance => {
   const api = axios.create({

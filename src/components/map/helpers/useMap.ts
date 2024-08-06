@@ -12,6 +12,13 @@ const useMap = ({ city, mapRef }: TUseMapProps) => {
   const isRenderedRef = useRef(false);
 
   useEffect(() => {
+    map?.flyTo(
+      [
+        city.location.latitude,
+        city.location.longitude,
+      ],
+      city.location.zoom, { duration: 0.3, easeLinearity: 1 }
+    );
     if (mapRef.current !== null && !isRenderedRef.current) {
       const instance = leaflet.map(mapRef.current, {
         center: {
@@ -19,7 +26,7 @@ const useMap = ({ city, mapRef }: TUseMapProps) => {
           lng: city.location.longitude,
         },
         zoom: city.location.zoom,
-      });
+      },);
 
       leaflet
         .tileLayer(
