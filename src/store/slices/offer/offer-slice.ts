@@ -1,15 +1,19 @@
 import { Offer, OfferPreview } from '@customType/offer';
 import { PayloadAction, createSlice } from '@reduxjs/toolkit';
+import { RequestStatus } from '@shared/api';
 import { OFFER_SLICE_NAME } from '@slices/slice-name';
+import { fetchNearBy, fetchOffer } from './offer-thunk';
 
 type OfferState = {
   info: Offer | null;
   nearby: OfferPreview[];
+  status: RequestStatus;
 };
 
 const initialState: OfferState = {
   info: null,
   nearby: [],
+  status: RequestStatus.Idle,
 };
 
 export const offerSlice = createSlice({
@@ -27,7 +31,16 @@ export const offerSlice = createSlice({
           : state.info;
     },
   },
-
+  extraReducers: (builder) => {
+    builder
+      .addCase(fetchOffer.fulfilled, (state, action) => {
+        state.info = action.payload;
+        state.status = RequestStatus.Success;
+      })
+      .addCase(fetchNearBy.fulfilled, (state, action) => {
+        state.nearby = action.payload;
+      });
+  },
   selectors: {
     nearbyOffers: (state) => state.nearby,
     offer: (state) => state.info,

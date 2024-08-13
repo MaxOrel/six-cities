@@ -1,19 +1,28 @@
-import { AppRoute } from '@constants';
+import Spinner from '@components/spinner';
+import { AppRoute, AuthorizationStatus } from '@constants';
+import { useAppSelector } from '@store/hooks/useAppSelector';
+import { userSelectors } from '@store/slices/user';
 import { Navigate, useLocation } from 'react-router-dom';
+import { useAuth } from '../../hooks/use-auth';
 type ProtectRouteProps = {
   onlyUnAuth?: boolean;
   children: JSX.Element;
 }
 export default function ProtectRoute({onlyUnAuth, children}: ProtectRouteProps) {
-  const user = true;
+  const isAuth = useAuth();
   const location = useLocation();
+  const userStatus = useAppSelector(userSelectors.userStatus)
 
-  if(user && onlyUnAuth) {
+  if(userStatus === AuthorizationStatus.Unknown) {
+    return <Spinner />
+  }
+
+  if(isAuth && onlyUnAuth) {
     const from = location.state?.from || { pathname: '/' }
     return <Navigate to={from} />
   }
 
-  if(!user && !onlyUnAuth) {
+  if(!isAuth && !onlyUnAuth) {
     return <Navigate to={AppRoute.Login} state={{from: location}} />
   }
 

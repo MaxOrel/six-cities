@@ -20,6 +20,13 @@ export const offersSlice = createSlice({
     changeCity: (state, action: PayloadAction<CitiesName>) => {
       state.currentCity = action.payload;
     },
+    updateOffers: (state, action: PayloadAction<string>) => {
+      state.offers = state.offers.map((offer) =>
+        offer.id === action.payload
+          ? { ...offer, isFavorite: !offer.isFavorite }
+          : offer
+      );
+    }
   },
   extraReducers: (builder) => {
     builder
@@ -37,5 +44,6 @@ export const offersSlice = createSlice({
   selectors: {
     offers: (state: OffersState) => state.offers,
     city: (state: OffersState) => state.currentCity,
+    offersStatus: (state: OffersState) => state.requestStatus,
   },
 });

@@ -7,9 +7,17 @@ import LoginPage from '@pages/login-page/login-page';
 import MainPage from '@pages/main-page/main-page';
 import NotFoundPage from '@pages/not-found-page/not-found-page';
 import OfferPage from '@pages/offer-page/offer-page';
+import { useActionCreators } from '@store/hooks/useActionCreator';
+import { userActions } from '@store/slices/user';
+import { useEffect } from 'react';
 import { Route, Routes } from 'react-router-dom';
 
 function App(): JSX.Element {
+  const {checkAuth} = useActionCreators(userActions);
+  useEffect(() => {
+      checkAuth();
+  }, [])
+
   return (
     <Routes>
       <Route path={AppRoute.Root} element={<Layout />}>

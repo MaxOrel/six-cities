@@ -1,7 +1,8 @@
 import { AuthorizationStatus } from '@constants';
 import { User } from '@customType/user';
-import { createSlice } from '@reduxjs/toolkit';
+import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { USER_SLICE_NAME } from '@slices/slice-name';
+import { checkAuth, login, logout } from './user-thunk';
 
 type UserState = {
   info: User | null;
@@ -13,11 +14,41 @@ const initialState: UserState = {
   status: AuthorizationStatus.Unknown,
 };
 
-
 export const userSlice = createSlice({
   name: USER_SLICE_NAME,
   initialState,
-  reducers: {},
+  reducers: {
+    checkUserStatus: (state, action: PayloadAction<AuthorizationStatus>) => {
+      state.status = action.payload;
+    },
+  },
+  extraReducers: (builder) => {
+    builder
+      .addCase(
+        checkAuth.fulfilled,
+        (state: UserState, action: PayloadAction<User>) => {
+          state.info = action.payload;
+          state.status = AuthorizationStatus.Auth;
+        }
+      )
+      .addCase(
+        login.fulfilled,
+        (state: UserState, action: PayloadAction<User>) => {
+          state.info = action.payload;
+          state.status = AuthorizationStatus.Auth;
+        }
+      )
+      .addCase(logout.fulfilled, (state: UserState) => {
+        state.info = null;
+        state.status = AuthorizationStatus.NoAuth;
+      })
+      .addCase(
+        checkAuth.rejected,
+        (state: UserState) => {
+          state.status = AuthorizationStatus.NoAuth;
+        }
+      );
+  },
   selectors: {
     userStatus: (state) => state.status,
     user: (state) => state.info,

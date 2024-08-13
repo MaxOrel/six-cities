@@ -21,6 +21,14 @@ export enum AppRoute{
   NotFound = '*'
 }
 
+export const Endpoint = {
+  Comments: '/comments',
+  Favorite: '/favorite',
+  Login: '/login',
+  Logout: '/logout',
+  Offers: '/offers',
+} as const;
+
 export const CITIES = [
   {
     id: 'paris',
