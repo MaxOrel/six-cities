@@ -9,7 +9,7 @@ export const LOCATIONS = [
   'Amsterdam',
   'Hamburg',
   'Dusseldorf',
-];
+] as const;
 
 
 export enum AppRoute{
@@ -97,6 +97,15 @@ export const enum SortOption {
 	PriceHighToLow,
 	TopRatedFirst
 }
+
+export const textError = {
+  textErrorAddOfferInFavorite: 'an error occurred when adding a suggestion to favorites',
+  textErrorCorrectValidationForm: 'an error occurred when adding a suggestion to favorites',
+  textLackOfAuthorization: 'the user is not logged in',
+  textSuccessAuthorization: 'you have successfully logged in',
+  textFailedAuthorization: 'an error occurred during authorization',
+  textFailedSendComment: 'an error occurred when sending a comment',
+};
 
 export const AUTH_TOKEN_KEY_NAME = 'six-cities-token';
 export const BACKEND_URL = 'https://16.design.htmlacademy.pro/six-cities';

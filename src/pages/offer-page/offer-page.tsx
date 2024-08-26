@@ -1,3 +1,9 @@
+import Spinner from '@components/spinner';
+import NotFoundPage from '@pages/not-found-page';
+import { RequestStatus } from '@shared/api';
+import { useAppDispatch } from '@store/hooks/useAppDispatch';
+import { offerActions, offerSelectors } from '@store/slices/offer';
+import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
 import { FavoriteButton } from '../../components/favorite-button/favorite-button';
 import Gallery from '../../components/gallery';
@@ -9,11 +15,10 @@ import OfferList from '../../components/offer-list/offer-list';
 import PremiumBadge from '../../components/premium-badge';
 import Rating from '../../components/rating';
 import Reviews from '../../components/reviews';
-import { OFFER_DETAIL } from '../../mocks/offers';
 import { useAppSelector } from '../../store/hooks/useAppSelector';
 import { offersSelectors } from '../../store/slices/offers';
-import { reviewsSelectors } from '../../store/slices/reviews';
-import { Offer, OfferPreview } from '../../types/offer';
+import { reviewsActions, reviewsSelectors } from '../../store/slices/reviews';
+import { OfferPreview } from '../../types/offer';
 
 type OfferPageProps = {
   offers: OfferPreview[];
@@ -21,17 +26,36 @@ type OfferPageProps = {
 
 function OfferPage({ offers }: OfferPageProps): JSX.Element {
   const { offerId } = useParams();
-  const offer = offers.find((offer) => offer.id === offerId);
-  const offerDetail = { ...offer, ...OFFER_DETAIL } as Offer;
+  const offerDetail = useAppSelector(offerSelectors.offer);
+  const otherPlaces = useAppSelector(offerSelectors.nearbyOffers).slice(0, 3);
+  const offerStatus = useAppSelector(offerSelectors.status);
+
+  const dispatch = useAppDispatch();
+  useEffect(() => {
+    if(offerId) {
+      dispatch(offerActions.fetchOffer(offerId));
+      dispatch(reviewsActions.fetchReviews(offerId));
+      dispatch(offerActions.fetchNearBy(offerId));
+    }
+  }, [])
   const reviews = useAppSelector(reviewsSelectors.reviews);
   const  currentCity = useAppSelector(offersSelectors.city);
-  const otherPlaces = offers.slice(0, 3);
+
+  if(!offerDetail && offerStatus !== RequestStatus.Loading) {
+    return <NotFoundPage />
+  }
+
+  if(!offerDetail || offerStatus === RequestStatus.Loading) {
+    return <Spinner />;
+  }
+
+
 
   return (
     <>
       <section className="offer">
         <div className="offer__gallery-container container">
-          <Gallery images={offerDetail.images} />
+          <Gallery images={offerDetail.images} maxCount={6} />
         </div>
         <div className="offer__container container">
           <div className="offer__wrapper">
@@ -43,7 +67,7 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
               <h1 className="offer__name">{offerDetail.title}</h1>
               <FavoriteButton offerId={offerDetail.id} bemBlock='offer' isFavorite={offerDetail.isFavorite} size='large'  />
             </div>
-            <Rating rating={offerDetail.rating} />
+            <Rating rating={offerDetail.rating} extraClassName='offer' isOnlyStars />
             <ul className="offer__features">
               <li className="offer__feature offer__feature--entire">
                 {offerDetail.type}
@@ -71,14 +95,14 @@ function OfferPage({ offers }: OfferPageProps): JSX.Element {
             <div className="offer__description">
               <p className="offer__text">{offerDetail.description}</p>
             </div>
-            <Reviews extraClassName="offer__reviews" reviews={reviews} />
+            <Reviews extraClassName="offer__reviews" reviews={reviews} offerId={offerId!} />
           </div>
         </div>
         <Map
           extraClassName="offer__map"
           cityName={currentCity}
-          points={otherPlaces}
-          selectedPoint={null}
+          points={[...otherPlaces, offerDetail]}
+          selectedPoint={offerDetail}
         />
       </section>
       <div className="container">

@@ -5,7 +5,7 @@ import { useEffect, useRef } from 'react';
 
 import { CITIES } from '../../shared/constants';
 import { CitiesName } from '../../types/city';
-import { OfferPreview } from '../../types/offer';
+import { Offer, OfferPreview } from '../../types/offer';
 import PinActive from './assets/pin-active.svg';
 import Pin from './assets/pin.svg';
 import useMap from './helpers/useMap';
@@ -13,8 +13,8 @@ import useMap from './helpers/useMap';
 type TMapProps = {
   extraClassName?: string;
   cityName: CitiesName;
-  points: OfferPreview[];
-  selectedPoint: OfferPreview | null;
+  points: Array<Offer | OfferPreview>;
+  selectedPoint: OfferPreview | Offer | null;
 };
 
 const defaultCustomIcon = leaflet.icon({

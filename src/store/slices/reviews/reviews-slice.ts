@@ -3,7 +3,6 @@ import { createSlice } from '@reduxjs/toolkit';
 import { RequestStatus } from '@shared/api';
 import { REVIEWS_SLICE_NAME } from '@slices/slice-name';
 import { isActionPending, isActionRejected } from '@utils/redux';
-import { REVIEWS } from '../../../mocks/reviews';
 import { fetchReviews, postReview } from './reviews-thunk';
 
 type ReviewsState = {
@@ -12,7 +11,7 @@ type ReviewsState = {
 };
 
 const initialState: ReviewsState = {
-  items: REVIEWS,
+  items: [],
   status: RequestStatus.Idle
 };
 
@@ -38,5 +37,6 @@ export const reviewsSlice = createSlice({
   },
   selectors: {
     reviews: (state) => state.items,
+    reviewsStatus: (state) => state.status,
   },
 });

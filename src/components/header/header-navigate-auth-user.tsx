@@ -1,12 +1,14 @@
 import { AppRoute } from '@shared/constants';
 import { useActionCreators } from '@store/hooks/useActionCreator';
-import { userActions } from '@store/slices/user';
+import { useAppSelector } from '@store/hooks/useAppSelector';
+import { userActions, userSelectors } from '@store/slices/user';
 import { Link } from 'react-router-dom';
 import { useFavoriteCount } from '../../hooks/use-favorites-count';
 
 export const HeaderNavigateAuthUser = () => {
   const { logout } = useActionCreators(userActions);
   const favoritesCount = useFavoriteCount()
+  const user = useAppSelector(userSelectors.user)
   return (
     <>
       <li className="header__nav-item user">
@@ -16,7 +18,7 @@ export const HeaderNavigateAuthUser = () => {
         >
           <div className="header__avatar-wrapper user__avatar-wrapper"></div>
           <span className="header__user-name user__name">
-            Oliver.conner@gmail.com
+            {user?.email}
           </span>
           <span className="header__favorite-count">{favoritesCount}</span>
         </Link>

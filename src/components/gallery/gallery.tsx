@@ -1,12 +1,13 @@
 type TGalleryProps = {
   images: string[];
+  maxCount: number;
 };
 
-function Gallery({ images }: TGalleryProps) {
+function Gallery({ images, maxCount }: TGalleryProps) {
   return (
     <div className="offer__gallery-container container">
       <div className="offer__gallery">
-        {images.map((image) => (
+        {images.slice(0, maxCount).map((image) => (
           <div key={image} className="offer__image-wrapper">
             <img className="offer__image" src={image} alt="Photo studio" />
           </div>

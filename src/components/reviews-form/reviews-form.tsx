@@ -1,15 +1,52 @@
-import { ChangeEvent, useState } from 'react';
+import { RequestStatus } from '@shared/api';
+import { useAppDispatch } from '@store/hooks/useAppDispatch';
+import { useAppSelector } from '@store/hooks/useAppSelector';
+import { reviewsActions, reviewsSelectors } from '@store/slices/reviews';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { toast } from 'react-toastify';
 import { RATING } from '../../shared/constants';
 import RatingInput from '../rating-input';
-
-function ReviewsForm() {
+type ReviewsFormProps = {
+  offerId: string;
+};
+function ReviewsForm({ offerId }: ReviewsFormProps) {
+  const reviewStatus = useAppSelector(reviewsSelectors.reviewsStatus);
+  const dispatch = useAppDispatch();
   const [userAnswer, setUserAnswer] = useState({
     stars: 0,
     description: '',
   });
+  const onFormSubmit = (e: FormEvent) => {
+    e.preventDefault();
+    dispatch(
+      reviewsActions.postReview({
+        offerId,
+        body: {
+          comment: userAnswer.description,
+          rating: userAnswer.stars,
+        },
+      })
+    )
+      .unwrap()
+      .then(() => {
+        setUserAnswer({
+          stars: 0,
+          description: '',
+        });
+        toast.success('Комментарий успешно отправлен!');
+      })
+      .catch(() => {
+        toast.error('Возникла ошибка при добавлении комментария!');
+      });
+  };
 
   return (
-    <form className="reviews__form form" action="#" method="post">
+    <form
+      className="reviews__form form"
+      action="#"
+      method="post"
+      onSubmit={onFormSubmit}
+    >
       <label className="reviews__label form__label" htmlFor="review">
         Your review
       </label>
@@ -45,7 +82,7 @@ function ReviewsForm() {
         <button
           className="reviews__submit form__submit button"
           type="submit"
-          disabled
+          disabled={reviewStatus === RequestStatus.Loading}
         >
           Submit
         </button>

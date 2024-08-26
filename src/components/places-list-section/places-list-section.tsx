@@ -50,7 +50,7 @@ function PlacesListSection({
       <section className="cities__places places">
         <h2 className="visually-hidden">Places</h2>
         <b className="places__found">
-          {sortedOffers.length} places to stay in {currentCity}
+          {sortedOffers.length} place{sortedOffers.length >1 ? 's': ''} to stay in {currentCity.toLocaleLowerCase()}
         </b>
         <SortingList setter={setActiveSort} current={activeSort} />
         <OfferList offers={sortedOffers} extraClassName={extraClassName}>
